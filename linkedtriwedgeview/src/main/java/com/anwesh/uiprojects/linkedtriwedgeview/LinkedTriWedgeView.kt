@@ -8,6 +8,8 @@ import android.view.MotionEvent
 import android.graphics.*
 import android.content.Context
 
+val TW_NODES : Int = 5
+
 class LinkedTriWedgeView (ctx : Context) : View(ctx) {
 
     private val paint : Paint = Paint(Paint.ANTI_ALIAS_FLAG)
@@ -41,6 +43,34 @@ class LinkedTriWedgeView (ctx : Context) : View(ctx) {
             if (dir == 0f) {
                 dir = 1 - 2 * prevScale
                 startcb()
+            }
+        }
+    }
+
+    data class Animator(var view : View, var animated : Boolean = false) {
+
+        fun animate(cb : () -> Unit) {
+            if (animated) {
+                cb()
+                try {
+                    Thread.sleep(50)
+                    view.invalidate()
+                } catch(ex : Exception) {
+
+                }
+            }
+        }
+
+        fun start() {
+            if (!animated) {
+                animated = true
+                view.postInvalidate()
+            }
+        }
+
+        fun stop() {
+            if (animated) {
+                animated = false
             }
         }
     }
