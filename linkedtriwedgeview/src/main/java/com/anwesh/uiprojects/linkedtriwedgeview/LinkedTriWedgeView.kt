@@ -97,6 +97,16 @@ class LinkedTriWedgeView (ctx : Context) : View(ctx) {
             val h : Float = canvas.height.toFloat()
             val gap : Float = w / TW_NODES
             prev?.draw(canvas, paint)
+            paint.color = Color.parseColor("#E1E1E1")
+            canvas.save()
+            canvas.translate((i - 1) * gap + gap * state.scale, h / 2)
+            val path : Path = Path()
+            path.moveTo(0f, 0f)
+            path.lineTo(gap, 0f)
+            path.lineTo(gap, -gap)
+            path.lineTo(0f, 0f)
+            canvas.drawPath(path, paint)
+            canvas.restore()
         }
 
         fun update(stopcb : (Float) -> Unit) {
