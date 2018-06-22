@@ -3,6 +3,7 @@ package com.anwesh.uiprojects.linkedtriwedgeview
 /**
  * Created by anweshmishra on 22/06/18.
  */
+import android.app.Activity
 import android.view.View
 import android.view.MotionEvent
 import android.graphics.*
@@ -176,6 +177,14 @@ class LinkedTriWedgeView (ctx : Context) : View(ctx) {
             ltw.startUpdating {
                 animator.start()
             }
+        }
+    }
+
+    companion object {
+        fun create(activity : Activity) : LinkedTriWedgeView {
+            val view : LinkedTriWedgeView = LinkedTriWedgeView(activity)
+            activity.setContentView(view)
+            return view 
         }
     }
 }
