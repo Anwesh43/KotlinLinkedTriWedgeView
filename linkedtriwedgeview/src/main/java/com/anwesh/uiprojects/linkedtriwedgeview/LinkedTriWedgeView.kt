@@ -75,4 +75,48 @@ class LinkedTriWedgeView (ctx : Context) : View(ctx) {
         }
     }
 
+    data class TWNode (var i : Int, val state : State = State()) {
+
+        private var next : TWNode? = null
+
+        private var prev : TWNode? = null
+
+        init {
+            addNeighbor()
+        }
+
+        fun addNeighbor() {
+            if (i < TW_NODES - 1) {
+                next = TWNode(i + 1)
+                next?.prev = this
+            }
+        }
+
+        fun draw(canvas : Canvas, paint : Paint) {
+            val w : Float = canvas.width.toFloat()
+            val h : Float = canvas.height.toFloat()
+            val gap : Float = w / TW_NODES
+            prev?.draw(canvas, paint)
+        }
+
+        fun update(stopcb : (Float) -> Unit) {
+            state.update(stopcb)
+        }
+
+        fun startUpdating(startcb : () -> Unit) {
+            state.startUpdating(startcb)
+        }
+
+        fun getNext(dir : Int, cb : () -> Unit) : TWNode {
+            var curr : TWNode? = prev
+            if (dir == 1) {
+                curr = next
+            }
+            if (curr != null) {
+                return curr
+            }
+            cb()
+            return this
+        }
+    }
 }
