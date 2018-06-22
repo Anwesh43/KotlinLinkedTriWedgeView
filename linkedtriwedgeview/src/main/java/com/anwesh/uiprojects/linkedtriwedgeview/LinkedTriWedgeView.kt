@@ -8,6 +8,7 @@ import android.view.View
 import android.view.MotionEvent
 import android.graphics.*
 import android.content.Context
+import android.content.pm.ActivityInfo
 
 val TW_NODES : Int = 5
 
@@ -184,7 +185,8 @@ class LinkedTriWedgeView (ctx : Context) : View(ctx) {
         fun create(activity : Activity) : LinkedTriWedgeView {
             val view : LinkedTriWedgeView = LinkedTriWedgeView(activity)
             activity.setContentView(view)
-            return view 
+            activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+            return view
         }
     }
 }
