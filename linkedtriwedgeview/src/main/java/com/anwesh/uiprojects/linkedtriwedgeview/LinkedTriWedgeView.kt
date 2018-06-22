@@ -132,7 +132,7 @@ class LinkedTriWedgeView (ctx : Context) : View(ctx) {
 
     data class LinkedTriWedge(var i : Int) {
 
-        private var curr : TWNode = TWNode(i)
+        private var curr : TWNode = TWNode(0)
 
         private var dir : Int = 1
 
@@ -151,6 +151,29 @@ class LinkedTriWedgeView (ctx : Context) : View(ctx) {
 
         fun startUpdating(startcb : () -> Unit) {
             curr.startUpdating(startcb)
+        }
+    }
+
+    data class Renderer(var view : LinkedTriWedgeView) {
+
+        private val animator : Animator = Animator(view)
+
+        private val ltw : LinkedTriWedge = LinkedTriWedge(0)
+
+        fun render(canvas : Canvas, paint : Paint) {
+            canvas.drawColor(Color.parseColor("#212121"))
+            ltw.draw(canvas, paint)
+            animator.animate {
+                ltw.update {
+                    animator.stop()
+                }
+            }
+        }
+
+        fun handleTap() {
+            ltw.startUpdating {
+                animator.start()
+            }
         }
     }
 }
